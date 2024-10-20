@@ -34,6 +34,9 @@ const image = ''; // Replace with image path if you have one
   <section class="text-center mb-14">
      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">{title}</h1>
     <p class="text-lg md:text-xl mt-4 text-gray-600">{description}</p>
+    {image && (
+      <img src={image} alt="William Jiang" class="rounded-full w-32 h-32 mt-6 shadow-lg" />
+    )}
 	 
 	 <!-- Social Media Icons -->
     <div class="flex justify-center space-x-6 mt-4">
@@ -66,7 +69,7 @@ const image = ''; // Replace with image path if you have one
     <ul class="space-y-6">
       {projects.map((project) => (
         <li key={project.slug} class="bg-white shadow-md p-6 rounded-lg hover:bg-gray-50 transition duration-300 dark:bg-red-800 transition-colors duration-500">
-          <a href= "https://github.com/WilliamxJiang" class="block text-xl font-medium text-gray-900 dark:text-white hover:text-red-600 ">
+          <a href="https://github.com/WilliamxJiang" class="block text-xl font-medium text-gray-900 dark:text-white hover:text-red-600">
             {project.data.title}
           </a>
           <p class="mt-2 text-gray-600 dark:text-white">{project.data.description}</p>
@@ -132,17 +135,17 @@ const image = ''; // Replace with image path if you have one
 
     let index = 0;
     function changeGreeting() {
-      // Fade out the text
-      greetingElement.style.opacity = '0';
+      if (greetingElement) {
+        // Fade out the text
+        greetingElement.style.opacity = '0';
 
-      // Wait for the fade-out to complete, then change the text
-      setTimeout(() => {
-        index = (index + 1) % translations.length; // Cycle through the array
-        greetingElement.textContent = translations[index];
-
-        // Fade the text back in
-        greetingElement.style.opacity = '1';
-      }, 1000); // This timeout should match the transition duration (1 second)
+        // Wait for the fade-out to complete, then change the text
+        setTimeout(() => {
+          index = (index + 1) % translations.length; // Cycle through the array
+          greetingElement.textContent = translations[index]; // Safely update textContent
+          greetingElement.style.opacity = '1'; // Fade in
+        }, 1000); // 1 second transition
+      }
     }
 
     // Change the greeting every 3 seconds
