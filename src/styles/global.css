@@ -1,0 +1,18 @@
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Apply these fonts to the body */
+body {
+  font-family: 'Crimson Text', sans-serif; /* Default font */
+}
+
+
+/* Add a transition to make the text fade in and out smoothly */
+#greeting {
+    transition: opacity 1s ease-in-out;
+  }
+
