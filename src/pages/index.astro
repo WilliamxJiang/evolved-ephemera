@@ -1,8 +1,18 @@
 ---
 import { getCollection } from 'astro:content';
 import '../styles/global.css';
-// Fetch the projects collection dynamically
-const projects = await getCollection('projects');
+
+// Define Project type for better typing
+type Project = {
+  slug: string;
+  data: {
+    title: string;
+    description: string;
+  };
+};
+
+// Fetch the projects collection dynamically with proper typing
+const projects: Project[] = await getCollection('projects');
 
 // Define some static content
 const title = 'William Jiang';
@@ -75,64 +85,67 @@ const image = ''; // Replace with image path if you have one
   </section>
 </main>
 
+<!-- JavaScript for theme toggle -->
 <script>
   const toggleButton = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
+  const greetingElement = document.getElementById('greeting');
   const rootElement = document.documentElement;
 
-  // Check the initial theme
-  if (localStorage.getItem('theme') === 'dark') {
-    rootElement.classList.add('dark');
-    themeIcon.classList.remove('fa-moon');
-    themeIcon.classList.add('fa-sun');
-  }
-
-  // Add event listener to toggle button
-  toggleButton.addEventListener('click', () => {
-    if (rootElement.classList.contains('dark')) {
-      rootElement.classList.remove('dark');
-      themeIcon.classList.remove('fa-sun');
-      themeIcon.classList.add('fa-moon');
-      localStorage.setItem('theme', 'light');
-    } else {
+  if (toggleButton && themeIcon && greetingElement) {
+    // Check the initial theme
+    const theme = localStorage.getItem('theme');
+    if (theme === 'dark') {
       rootElement.classList.add('dark');
       themeIcon.classList.remove('fa-moon');
       themeIcon.classList.add('fa-sun');
-      localStorage.setItem('theme', 'dark');
     }
-  });
-</script>
-<script>
-  const translations = [
-    "Hi there!",       // English
-    "¡Hola!",          // Spanish
-    "Bonjour!",        // French
-    "Hallo!",          // German
-    "Ciao!",           // Italian
-    "Olá!",            // Portuguese
-    "こんにちは!",      // Japanese
-    "안녕하세요!",        // Korean
-    "你好!",            // Chinese
-    "Привет!"          // Russian
-  ];
 
-  let index = 0;
-  const greetingElement = document.getElementById('greeting');
+    // Add event listener to toggle button
+    toggleButton.addEventListener('click', () => {
+      if (rootElement.classList.contains('dark')) {
+        rootElement.classList.remove('dark');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'light');
+      } else {
+        rootElement.classList.add('dark');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
 
-  function changeGreeting() {
-    // Fade out the text
-    greetingElement.style.opacity = 0;
+    // Translations logic
+    const translations = [
+      "Hi there!",       // English
+      "¡Hola!",          // Spanish
+      "Bonjour!",        // French
+      "Hallo!",          // German
+      "Ciao!",           // Italian
+      "Olá!",            // Portuguese
+      "こんにちは!",      // Japanese
+      "안녕하세요!",        // Korean
+      "你好!",            // Chinese
+      "Привет!"          // Russian
+    ];
 
-    // Wait for the fade-out to complete, then change the text
-    setTimeout(() => {
-      index = (index + 1) % translations.length; // Cycle through the array
-      greetingElement.textContent = translations[index];
+    let index = 0;
+    function changeGreeting() {
+      // Fade out the text
+      greetingElement.style.opacity = '0';
 
-      // Fade the text back in
-      greetingElement.style.opacity = 1;
-    }, 1000); // This timeout should match the transition duration (1 second)
+      // Wait for the fade-out to complete, then change the text
+      setTimeout(() => {
+        index = (index + 1) % translations.length; // Cycle through the array
+        greetingElement.textContent = translations[index];
+
+        // Fade the text back in
+        greetingElement.style.opacity = '1';
+      }, 1000); // This timeout should match the transition duration (1 second)
+    }
+
+    // Change the greeting every 3 seconds
+    setInterval(changeGreeting, 3000);
   }
-
-  // Change the greeting every 3 seconds
-  setInterval(changeGreeting, 3000);
 </script>
