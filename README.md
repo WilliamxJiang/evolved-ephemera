@@ -1,1 +1,1 @@
-Draft file of portfolio website
+Put together a quick static portfolio page using Astra and Typescript
