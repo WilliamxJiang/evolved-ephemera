@@ -1,4 +1,4 @@
 ---
-title: "10/19/24"
-description: "launched this site so my domain name doesn't turn inactive haha..."
+title: "Projects"
+description: "links coming soon"
 ---
